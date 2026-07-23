@@ -30,15 +30,15 @@ Al finalizar la actividad, los estudiantes deberán ser capaces de:
 
 ## 1. Nombre del Space
 
-**Nombre:**
+**Nombre:** Qwen Image Edit 2511 — 3D Camera Control
 
-**Enlace:**
+**Enlace:** https://huggingface.co/spaces/multimodalart/qwen-image-multiple-angles-3d-camera
 
 ------------------------------------------------------------------------
 
 ## 2. ¿Qué hace el agente?
 
-Describa en dos o tres líneas cuál es la función del sistema.
+El agente toma una imagen y la recrea desde otro punto de vista usando la inclinación de los angulos en sentido vertical y horizontal y la cercanía del observador a la misma.
 
 ------------------------------------------------------------------------
 
@@ -46,10 +46,10 @@ Describa en dos o tres líneas cuál es la función del sistema.
 
   Elemento          Respuesta
   ----------------- ----------------------------------------------------
-  **Performance**   ¿Qué significa que el agente haga bien su trabajo?
-  **Environment**   ¿Con qué interactúa el agente?
-  **Actuators**     ¿Qué acciones produce?
-  **Sensors**       ¿Qué información recibe como entrada?
+  **Performance**   Que pueda recrear la imagen desde otro punto de vista de manera realista y coherente en terminos proporciones, tamaño, colores, iluminación, texturas y semantica.
+  **Environment**   El agente interactua con unos sliders que permiten definir cercación de la imagen y el nivel de angulo vertical y horizontal.
+  **Actuators**     La generación de la nueva imagen desde otro punto de vista.
+  **Sensors**       La imagen en formato png, jpge, etc.
 
 ------------------------------------------------------------------------
 
@@ -59,12 +59,12 @@ Complete la siguiente tabla y justifique brevemente cada respuesta.
 
   Propiedad      Clasificación     Justificación
   -------------- ----------------- ---------------
-  Observable     Total / Parcial   
-  Determinista   Sí / No           
-  Episódico      Sí / No           
-  Estático       Sí / No           
-  Discreto       Sí / No           
-  Conocido       Sí / No           
+  Observable     Total             Los sensores del entorno siempre tienen la información de entrada de los angulos y distancia de cercanía y de la imagen completa como tal (todos los pixeles de entrada)   
+  Determinista   Sí                En terminos practicos para cada configuración de los sliders y la imagen de entrada se debería retornar unicamente una salida posible
+  Episódico      Sí                Es un proceso secuencial de recibir los parametros de los sliders y la imagen de entrada y de allí se pasa a la fase de generación
+  Estático       Sí                Los sliders y la imagen solo se definen una vez y con eso estatico y fijo se recrea la imagen           
+  Discreto       Sí                El estado y las acciones son discretas, pues, son 3 sliders con rangos discretos junto con una sola imagen           
+  Conocido       Sí                Sí, debido a la naturaleza del agente debería tener el contexto y capacidad imaginativa para recrear la imagen desde otro punto de vista           
 
 ------------------------------------------------------------------------
 
@@ -74,12 +74,15 @@ Seleccione la opción que consideren más adecuada y explique por qué.
 
 -   Agente de reflejo simple
 -   Agente basado en modelo
--   Agente basado en objetivos
+-   **Agente basado en objetivos**
 -   Agente basado en utilidad
 -   Agente con aprendizaje
 
 > **Importante:** No existe una única respuesta correcta. Lo importante
 > es justificar la elección a partir del comportamiento observado.
+
+**Justificación: ** La razón es que el modelo podría generar diferentes imagenes y evaluar cada una hasta que alguna alcanze el objetivo que podría ser alcanzar un umbral de alguna métrica que combina tamaño
+de objetos, colores, iluminación, sentido semantico, etc.
 
 ------------------------------------------------------------------------
 
@@ -100,7 +103,19 @@ Después de las presentaciones, discutiremos preguntas como:
 Encuentre un Space que pueda clasificarse como:
 
 1.  **Totalmente observable, determinista y episódico.**
+https://huggingface.co/spaces/google/gemma4_vision_token_budget
+Gemma 4 - Vision Token Budget
+
+Este es un agente que modifica el tamaño de las imagenes.
+Es observable porque toda la información de la imagen ya la tiene, determinista porque dada la imagen de entrada debería haber una única salida y episódica porque los pasos son secuenciales y definidos.
+
 2.  **Parcialmente observable, estocástico y secuencial.**
+https://huggingface.co/spaces/zhaoyanchao/my_space
+Kronos-mini: Financial K-line Forecast
+
+Una gente de pronostico financiero
+Es parcialmente observable porque los datos de entrada podrían no estar en una escala de tiempo adecuado ni tener historicidad completa, es estocástico porque dependiendo el método de pronóstico podría haber
+diferencias en las predicciones (por ejemplo si hay un proceso de remuestreo o montecarlo), y es secuencial debido a que normalmente estos modelos son autoregresivos.
 
 Justifique su respuesta.
 
